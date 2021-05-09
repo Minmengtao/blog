@@ -2,6 +2,11 @@ package com.mmt.blog.entity;
 
 import java.util.Date;
 
+/**
+ *
+ * @author minmengtao
+ * @date 2021-5-9
+ */
 public class BlogTagRelation {
     private Long relationId;
 

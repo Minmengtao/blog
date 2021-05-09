@@ -1,5 +1,10 @@
 package com.mmt.blog.entity;
 
+/**
+ *
+ * @author minmengtao
+ * @date 2021-5-9
+ */
 public class BlogTagCount {
     private Integer tagId;
 
