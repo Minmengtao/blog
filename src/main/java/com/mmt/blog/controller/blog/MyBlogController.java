@@ -1,4 +1,4 @@
-package com.mmt.blog.controller;
+package com.mmt.blog.controller.blog;
 
 import com.mmt.blog.service.BlogService;
 import com.mmt.blog.util.PageResult;
@@ -43,6 +43,7 @@ public class MyBlogController {
             return "error/error_404";
         }
         request.setAttribute("blogPageResult", blogPageResult);
+        //request.setAttribute("newBlogs", 1);
         return "blog/" + theme + "/index";
     }
 }
