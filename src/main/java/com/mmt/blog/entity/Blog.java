@@ -1,6 +1,7 @@
 package com.mmt.blog.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.util.Date;
 
@@ -9,6 +10,7 @@ import java.util.Date;
  * @author minmengtao
  * @date 2021-5-9
  */
+@EntityScan
 public class Blog {
     //博客ID
     private Long blogId;

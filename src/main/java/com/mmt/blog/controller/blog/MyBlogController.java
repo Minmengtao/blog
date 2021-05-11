@@ -43,7 +43,9 @@ public class MyBlogController {
             return "error/error_404";
         }
         request.setAttribute("blogPageResult", blogPageResult);
-        //request.setAttribute("newBlogs", 1);
+        request.setAttribute("newBlogs", blogService.getBlogListForIndexPage(1));
+        request.setAttribute("hotBlogs", blogService.getBlogListForIndexPage(0));
+        request.setAttribute("pageName", "首页");
         return "blog/" + theme + "/index";
     }
 }

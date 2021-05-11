@@ -14,7 +14,7 @@ public class BlogCategory {
     private Integer categoryId;
     //分类名称
     private String categoryName;
-    //分类
+    //分类的图片
     private String categoryIcon;
     //分类重要性
     private Integer categoryRank;

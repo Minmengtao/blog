@@ -18,7 +18,7 @@ public class PageResult implements Serializable {
     private int totalPage;
     //当前页数
     private int currPage;
-    //列表数据
+    //列表数据(博客数据)
     private List<?> list;
 
     /**

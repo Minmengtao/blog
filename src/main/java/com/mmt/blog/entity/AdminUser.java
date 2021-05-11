@@ -1,9 +1,12 @@
 package com.mmt.blog.entity;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
 /**
  * @author minmengtao
  * @date 2021-5-9
  */
+@EntityScan
 public class AdminUser {
     //管理员密码
     private Integer adminUserId;
