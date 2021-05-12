@@ -1,6 +1,7 @@
 package com.mmt.blog.controller.blog;
 
 import com.mmt.blog.service.BlogService;
+import com.mmt.blog.service.TagService;
 import com.mmt.blog.util.PageResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,9 @@ public class MyBlogController {
 
     @Resource
     private BlogService blogService;
+
+    @Resource
+    private TagService tagService;
     /**
      * 首页
      *
@@ -45,6 +49,7 @@ public class MyBlogController {
         request.setAttribute("blogPageResult", blogPageResult);
         request.setAttribute("newBlogs", blogService.getBlogListForIndexPage(1));
         request.setAttribute("hotBlogs", blogService.getBlogListForIndexPage(0));
+        request.setAttribute("hotTags", tagService.getBlogTagCountForIndex());
         request.setAttribute("pageName", "首页");
         return "blog/" + theme + "/index";
     }
