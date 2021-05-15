@@ -46,7 +46,8 @@
 
 ### 1.个人论文研读
 - 图论方向
-1. [ExactSim](https://github.com/Minmengtao/ApproximateSimRank)
+1. [SimRank](https://github.com/Minmengtao/ApproximateSimRank)
+2. [Eccentricity](https://github.com/Minmengtao/Eccentricity)
 - machine learning
 
 - 
