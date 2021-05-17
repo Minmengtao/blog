@@ -7,9 +7,15 @@ import com.mmt.blog.service.TagService;
 import com.mmt.blog.util.PageQueryUtil;
 import com.mmt.blog.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author minmengtao
+ * @date 2021-5-17
+ */
+@Service
 public class TagServiceImpl implements TagService {
 
     @Autowired
@@ -24,6 +30,6 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<BlogTagCount> getBlogTagCountForIndex() {
-        return null;
+        return blogTagMapper.getTagCount();
     }
 }
