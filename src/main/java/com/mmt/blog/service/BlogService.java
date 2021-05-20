@@ -1,5 +1,6 @@
 package com.mmt.blog.service;
 
+import com.mmt.blog.controller.vo.BlogDetailVO;
 import com.mmt.blog.controller.vo.SimpleBlogListVO;
 import com.mmt.blog.util.PageQueryUtil;
 import com.mmt.blog.util.PageResult;
@@ -27,4 +28,12 @@ public interface BlogService {
      * @return
      */
     List<SimpleBlogListVO> getBlogListForIndexPage(int type);
+
+    /**
+     * 文章详情
+     *
+     * @param blogId
+     * @return
+     */
+    BlogDetailVO getBlogDetail(Long blogId);
 }

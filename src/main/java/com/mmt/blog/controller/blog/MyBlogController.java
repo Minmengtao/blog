@@ -1,5 +1,6 @@
 package com.mmt.blog.controller.blog;
 
+import com.mmt.blog.controller.vo.BlogDetailVO;
 import com.mmt.blog.service.BlogService;
 import com.mmt.blog.service.ConfigService;
 import com.mmt.blog.service.TagService;
@@ -7,6 +8,7 @@ import com.mmt.blog.util.PageResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -57,5 +59,15 @@ public class MyBlogController {
         request.setAttribute("pageName", "首页");
         request.setAttribute("configurations", configService.getAllConfigs());
         return "blog/" + theme + "/index";
+    }
+
+    /**
+     * @author: minmengtao
+     * @date: 2021/5/20
+     * @description: 博客详情页
+     */
+    @GetMapping({"/blog/{blogId}", "/article/{blogId}"})
+    public String detail(HttpServletRequest request, @PathVariable("blogId") Long blogId, @RequestParam(value = "commentPage", required = false, defaultValue = "1") Integer commentPage) {
+        BlogDetailVO blogDetailVO = blogService.
     }
 }

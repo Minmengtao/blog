@@ -14,6 +14,10 @@ import java.util.List;
  */
 @Mapper
 public interface BlogMapper {
+    Blog selectByPrimaryKey(Long blogId);
+
+    int updateByPrimaryKey(Blog record);
+
     //查询所有博客
     List<Blog> findBlogList(PageQueryUtil pageUtil);
 

@@ -1,5 +1,6 @@
 package com.mmt.blog.service.impl;
 
+import com.mmt.blog.controller.vo.BlogDetailVO;
 import com.mmt.blog.controller.vo.BlogListVO;
 import com.mmt.blog.controller.vo.SimpleBlogListVO;
 import com.mmt.blog.dao.BlogCategoryMapper;
@@ -7,6 +8,7 @@ import com.mmt.blog.dao.BlogMapper;
 import com.mmt.blog.entity.Blog;
 import com.mmt.blog.entity.BlogCategory;
 import com.mmt.blog.service.BlogService;
+import com.mmt.blog.util.MarkDownUtil;
 import com.mmt.blog.util.PageQueryUtil;
 import com.mmt.blog.util.PageResult;
 import org.springframework.beans.BeanUtils;
@@ -65,6 +67,37 @@ public class BlogServiceImpl implements BlogService {
             }
         }
         return simpleBlogListVOS;
+    }
+
+    @Override
+    public BlogDetailVO getBlogDetail(Long id) {
+        Blog blog = blogMapper.selectByPrimaryKey(id);
+        //不为空且状态为已发布
+        BlogDetailVO blogDetailVO = getBlogDetailVO(blog);
+        if (blogDetailVO != null) {
+            return blogDetailVO;
+        }
+        return null;
+    }
+
+    /**
+     * 方法抽取
+     *
+     * @param blog
+     * @return
+     */
+    private BlogDetailVO getBlogDetailVO(Blog blog) {
+        if (blog != null && blog.getBlogStatus() == 1) {
+            //增加浏览量
+            blog.setBlogViews(blog.getBlogViews() + 1);
+            blogMapper.updateByPrimaryKey(blog);//更新浏览量
+
+            BlogDetailVO blogDetailVO = new BlogDetailVO();
+            BeanUtils.copyProperties(blog, blogDetailVO);
+            blogDetailVO.setBlogContent(MarkDownUtil.mdToHtml(blogDetailVO.getBlogContent()));
+            return blogDetailVO;
+        }
+        return null;
     }
 
     //将所有博客重新处理一遍，看它是否有没有分类，没有分类的话默认分类
