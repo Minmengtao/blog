@@ -2,6 +2,7 @@ package com.mmt.blog.controller.blog;
 
 import com.mmt.blog.controller.vo.BlogDetailVO;
 import com.mmt.blog.service.BlogService;
+import com.mmt.blog.service.CommentService;
 import com.mmt.blog.service.ConfigService;
 import com.mmt.blog.service.TagService;
 import com.mmt.blog.util.PageResult;
@@ -35,6 +36,9 @@ public class MyBlogController {
 
     @Resource
     private ConfigService configService;
+
+    @Resource
+    private CommentService commentService;
     /**
      * 首页
      *
@@ -68,6 +72,13 @@ public class MyBlogController {
      */
     @GetMapping({"/blog/{blogId}", "/article/{blogId}"})
     public String detail(HttpServletRequest request, @PathVariable("blogId") Long blogId, @RequestParam(value = "commentPage", required = false, defaultValue = "1") Integer commentPage) {
-        BlogDetailVO blogDetailVO = blogService.
+        BlogDetailVO blogDetailVO = blogService.getBlogDetail(blogId);
+        if (blogDetailVO != null) {
+            request.setAttribute("blogDetailVO", blogDetailVO);
+            request.setAttribute("commentPageResult", commentService.getCommentPageByBlogIdAndPageNum(blogId, commentPage));
+        }
+        request.setAttribute("pageName", "详情");
+        request.setAttribute("configurations", configService.getAllConfigs());
+        return "blog/" + theme + "/detail";
     }
 }

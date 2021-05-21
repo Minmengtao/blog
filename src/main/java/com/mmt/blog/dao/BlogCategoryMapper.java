@@ -13,5 +13,7 @@ import java.util.List;
  */
 @Mapper
 public interface BlogCategoryMapper {
+    BlogCategory selectByPrimaryKey(Integer categoryId);
+
     List<BlogCategory> selectByCategoryIds(@Param("categoryIds") List<Integer> categoryIds);
 }

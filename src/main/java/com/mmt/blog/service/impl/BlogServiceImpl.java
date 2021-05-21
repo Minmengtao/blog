@@ -4,6 +4,7 @@ import com.mmt.blog.controller.vo.BlogDetailVO;
 import com.mmt.blog.controller.vo.BlogListVO;
 import com.mmt.blog.controller.vo.SimpleBlogListVO;
 import com.mmt.blog.dao.BlogCategoryMapper;
+import com.mmt.blog.dao.BlogCommentMapper;
 import com.mmt.blog.dao.BlogMapper;
 import com.mmt.blog.entity.Blog;
 import com.mmt.blog.entity.BlogCategory;
@@ -15,11 +16,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -28,9 +27,12 @@ import java.util.stream.Collectors;
 @Service
 public class BlogServiceImpl implements BlogService {
     @Autowired
-    private BlogCategoryMapper blogCategoryMapper;
+    private BlogCommentMapper blogCommentMapper;
+    @Autowired
+    private BlogCategoryMapper categoryMapper;
     @Autowired
     private BlogMapper blogMapper;
+
     @Override
     public PageResult getBlogsPage(PageQueryUtil pageUtil) {
         List<Blog> blogList = blogMapper.findBlogList(pageUtil);
@@ -95,6 +97,27 @@ public class BlogServiceImpl implements BlogService {
             BlogDetailVO blogDetailVO = new BlogDetailVO();
             BeanUtils.copyProperties(blog, blogDetailVO);
             blogDetailVO.setBlogContent(MarkDownUtil.mdToHtml(blogDetailVO.getBlogContent()));
+            BlogCategory blogCategory = categoryMapper.selectByPrimaryKey(blogDetailVO.getBlogCategoryId());
+            if(blogCategory == null) {
+                blogCategory = new BlogCategory();
+                blogCategory.setCategoryId(0);
+                blogCategory.setCategoryName("默认分类");
+                blogCategory.setCategoryIcon("/admin/dist/img/category/00.png");
+            }
+
+            //分类信息
+            blogDetailVO.setBlogCategoryIcon(blogCategory.getCategoryIcon());
+            if(!StringUtils.isEmpty(blog.getBlogTags())) {
+                //标签设置
+                List<String> tags = Arrays.asList(blog.getBlogTags().split(";"));
+                blogDetailVO.setBlogTags(tags);
+            }
+
+            //设置评论数
+            Map params = new HashMap();
+            params.put("blogId", blog.getBlogId());
+            params.put("commentStatus", 1);//过滤审核通过的数据
+            blogDetailVO.setCommentCount(blogCommentMapper.getTotalBlogComments(params));
             return blogDetailVO;
         }
         return null;
@@ -110,7 +133,7 @@ public class BlogServiceImpl implements BlogService {
             Map<Integer, String> blogCategoryMap = new HashMap<>();
             //如果categoryIds为空跳过去（即没有为博客分类）
             if(!CollectionUtils.isEmpty(categoryIds)) {
-                List<BlogCategory> blogCategories = blogCategoryMapper.selectByCategoryIds(categoryIds);
+                List<BlogCategory> blogCategories = categoryMapper.selectByCategoryIds(categoryIds);
                 if(!CollectionUtils.isEmpty(blogCategories)) {
                     blogCategoryMap = blogCategories.stream().collect(Collectors.toMap(BlogCategory::getCategoryId, BlogCategory::getCategoryIcon, (key1, key2) -> key2));
                 }
