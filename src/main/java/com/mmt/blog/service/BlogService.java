@@ -36,4 +36,13 @@ public interface BlogService {
      * @return
      */
     BlogDetailVO getBlogDetail(Long blogId);
+
+    /**
+     * 根据标签获取文章列表
+     *
+     * @param tagName
+     * @param page
+     * @return
+     */
+    PageResult getBlogsPageByTag(String tagName, int page);
 }

@@ -6,12 +6,15 @@ import com.mmt.blog.controller.vo.SimpleBlogListVO;
 import com.mmt.blog.dao.BlogCategoryMapper;
 import com.mmt.blog.dao.BlogCommentMapper;
 import com.mmt.blog.dao.BlogMapper;
+import com.mmt.blog.dao.BlogTagMapper;
 import com.mmt.blog.entity.Blog;
 import com.mmt.blog.entity.BlogCategory;
+import com.mmt.blog.entity.BlogTag;
 import com.mmt.blog.service.BlogService;
 import com.mmt.blog.util.MarkDownUtil;
 import com.mmt.blog.util.PageQueryUtil;
 import com.mmt.blog.util.PageResult;
+import com.mmt.blog.util.PatternUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,8 @@ public class BlogServiceImpl implements BlogService {
     private BlogCategoryMapper categoryMapper;
     @Autowired
     private BlogMapper blogMapper;
+    @Autowired
+    private BlogTagMapper tagMapper;
 
     @Override
     public PageResult getBlogsPage(PageQueryUtil pageUtil) {
@@ -78,6 +83,14 @@ public class BlogServiceImpl implements BlogService {
         BlogDetailVO blogDetailVO = getBlogDetailVO(blog);
         if (blogDetailVO != null) {
             return blogDetailVO;
+        }
+        return null;
+    }
+
+    @Override
+    public PageResult getBlogsPageByTag(String tagName, int page) {
+        if(PatternUtil.validKeyword(tagName)) {
+            BlogTag tag = tagMapper
         }
         return null;
     }
