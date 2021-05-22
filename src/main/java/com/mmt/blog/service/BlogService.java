@@ -45,4 +45,24 @@ public interface BlogService {
      * @return
      */
     PageResult getBlogsPageByTag(String tagName, int page);
+
+    /**
+     * 根据分类获取文章列表
+     *
+     * @param categoryName
+     * @param page
+     * @return
+     */
+    PageResult getBlogsPageByCategory(String categoryName, int page);
+
+    /**
+     * 根据搜索获取文章列表
+     *
+     * @param keyword
+     * @param page
+     * @return
+     */
+    PageResult getBlogsPageBySearch(String keyword, int page);
+
+    BlogDetailVO getBlogDetailBySubUrl(String subUrl);
 }

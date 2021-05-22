@@ -23,6 +23,11 @@ public class CommentServiceImpl implements CommentService {
     private BlogCommentMapper blogCommentMapper;
 
     @Override
+    public boolean addComment(BlogComment blogComment) {
+        return blogCommentMapper.insertSelective(blogComment) > 0;
+    }
+
+    @Override
     public PageResult getCommentPageByBlogIdAndPageNum(Long blogId, int page) {
         if(page < 1) {
             return null;

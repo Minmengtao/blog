@@ -1,5 +1,6 @@
 package com.mmt.blog.service;
 
+import com.mmt.blog.entity.BlogComment;
 import com.mmt.blog.util.PageResult;
 
 /**
@@ -8,6 +9,12 @@ import com.mmt.blog.util.PageResult;
  * @description:
  */
 public interface CommentService {
+    /**
+     * 添加评论
+     * @param blogComment
+     * @return
+     */
+    boolean addComment(BlogComment blogComment);
     /**
      * 根据文章id和分页参数获取文章的评论列表
      *
