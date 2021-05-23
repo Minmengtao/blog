@@ -20,6 +20,12 @@ public class LinkServiceImpl implements LinkService {
 
     @Autowired
     private BlogLinkMapper blogLinkMapper;
+
+    @Override
+    public int getTotalLinks() {
+        return blogLinkMapper.getTotalLinks(null);
+    }
+
     @Override
     public Map<Byte, List<BlogLink>> getLinksForLinkPage() {
         //获取所有链接数据

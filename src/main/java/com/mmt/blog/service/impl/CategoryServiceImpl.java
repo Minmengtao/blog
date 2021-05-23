@@ -18,6 +18,11 @@ public class CategoryServiceImpl implements CategoryService {
     private BlogCategoryMapper blogCategoryMapper;
 
     @Override
+    public int getTotalCategories() {
+        return blogCategoryMapper.getTotalCategories(null);
+    }
+
+    @Override
     public List<BlogCategory> getAllCategories() {
         return blogCategoryMapper.findCategoryList(null);
     }

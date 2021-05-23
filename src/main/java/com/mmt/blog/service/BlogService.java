@@ -14,6 +14,8 @@ import java.util.List;
 public interface BlogService {
     PageResult getBlogsPage(PageQueryUtil pageUtil);
 
+    int getTotalBlogs();
+
     /**
      * 获取首页文章列表
      * @param page

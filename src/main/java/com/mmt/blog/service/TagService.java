@@ -20,6 +20,8 @@ public interface TagService {
      */
     PageResult getBlogTagPage(PageQueryUtil pageQueryUtil);
 
+    int getTotalTags();
+
     /**
      * 查询标签的所有博客数据
      * @return

@@ -28,6 +28,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public int getTotalComments() {
+        return blogCommentMapper.getTotalBlogComments(null);
+    }
+
+    @Override
     public PageResult getCommentPageByBlogIdAndPageNum(Long blogId, int page) {
         if(page < 1) {
             return null;

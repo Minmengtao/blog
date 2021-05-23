@@ -47,6 +47,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public int getTotalBlogs() {
+        return blogMapper.getTotalBlogs(null);
+    }
+
+    @Override
     public PageResult getBlogsForIndexPage(int page) {
         Map params = new HashMap<>();
         //当前第几页

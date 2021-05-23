@@ -11,6 +11,7 @@ import java.util.Map;
  * @description:
  */
 public interface LinkService {
+    int getTotalLinks();
     /**
      * 返回友链页面所需的所有数据
      *

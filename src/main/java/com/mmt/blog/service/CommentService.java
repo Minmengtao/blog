@@ -15,6 +15,9 @@ public interface CommentService {
      * @return
      */
     boolean addComment(BlogComment blogComment);
+
+    int getTotalComments();
+
     /**
      * 根据文章id和分页参数获取文章的评论列表
      *
