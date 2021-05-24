@@ -78,6 +78,53 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/profile")
+    public String profile(HttpServletRequest request) {
+        Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
+        AdminUser adminUser = adminUserService.getUserDetailById(loginUserId);
+        if(adminUser == null) {
+            return "admin/login";
+        }
+        request.setAttribute("path", "profile");
+        request.setAttribute("loginUserName", adminUser.getLoginUserName());
+        request.setAttribute("nickName", adminUser.getNickName());
+        return "admin/profile";
+    }
+
+    @PostMapping("/profile/password")
+    @ResponseBody
+    public String passwordUpdate(HttpServletRequest request, @RequestParam("originalPassword") String originalPassword,
+                                 @RequestParam("newPassword") String newPassword) {
+        if(StringUtils.isEmpty(originalPassword) || StringUtils.isEmpty(newPassword)) {
+            return "参数不能为空";
+        }
+        Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
+        if(adminUserService.updatePassword(loginUserId, originalPassword, newPassword)) {
+            //修改成功后清空session中的数据，前端控制跳转至登陆页
+            request.getSession().removeAttribute("loginUserId");
+            request.getSession().removeAttribute("loginUser");
+            request.getSession().removeAttribute("errorMsg");
+            return "success";
+        } else {
+            return "修改失败";
+        }
+    }
+
+    @PostMapping("/profile/name")
+    @ResponseBody
+    public String updateName(HttpServletRequest request, @RequestParam("loginUserName") String loginUserName,
+                             @RequestParam("nickName") String nickName) {
+        if(StringUtils.isEmpty(loginUserName) || StringUtils.isEmpty(nickName)) {
+            return "参数不能为空";
+        }
+        Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
+        if (adminUserService.updateName(loginUserId, loginUserName, nickName)) {
+            return "success";
+        } else {
+            return "修改失败";
+        }
+    }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("loginUserId");
