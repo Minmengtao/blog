@@ -34,7 +34,7 @@ public class PageResult implements Serializable {
         this.pageSize = pageSize;
         this.currPage = currPage;
         //记录数少于一叶记录数的自成一页(向上取整)
-        this.totalPage = (int) Math.ceil(totalCount / pageSize);
+        this.totalPage = (int) Math.ceil((double)totalCount / pageSize);
     }
 
     public int getTotalCount() {

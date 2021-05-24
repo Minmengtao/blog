@@ -95,12 +95,12 @@ public class AdminController {
     @ResponseBody
     public String passwordUpdate(HttpServletRequest request, @RequestParam("originalPassword") String originalPassword,
                                  @RequestParam("newPassword") String newPassword) {
-        if(StringUtils.isEmpty(originalPassword) || StringUtils.isEmpty(newPassword)) {
+        if (StringUtils.isEmpty(originalPassword) || StringUtils.isEmpty(newPassword)) {
             return "参数不能为空";
         }
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
-        if(adminUserService.updatePassword(loginUserId, originalPassword, newPassword)) {
-            //修改成功后清空session中的数据，前端控制跳转至登陆页
+        if (adminUserService.updatePassword(loginUserId, originalPassword, newPassword)) {
+            //修改成功后清空session中的数据，前端控制跳转至登录页
             request.getSession().removeAttribute("loginUserId");
             request.getSession().removeAttribute("loginUser");
             request.getSession().removeAttribute("errorMsg");

@@ -2,8 +2,10 @@ package com.mmt.blog.service;
 
 import com.mmt.blog.controller.vo.BlogDetailVO;
 import com.mmt.blog.controller.vo.SimpleBlogListVO;
+import com.mmt.blog.entity.Blog;
 import com.mmt.blog.util.PageQueryUtil;
 import com.mmt.blog.util.PageResult;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.List;
 
@@ -12,9 +14,20 @@ import java.util.List;
  * @date 2020-5-8
  */
 public interface BlogService {
+    String saveBlog(Blog blog);
+
     PageResult getBlogsPage(PageQueryUtil pageUtil);
 
+    Boolean deleteBatch(Integer[] ids);
+
     int getTotalBlogs();
+
+    /**
+     * 根据id获取博客详情
+     * @param blogId
+     * @return
+     */
+    Blog getBlogById(Long blogId);
 
     /**
      * 获取首页文章列表
